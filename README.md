@@ -2,9 +2,9 @@
 
 In the project directory, you must install dependencies:
 
-### `npm install`
-
+### `npm install` or `yarn`
+ 
 After, you can run:
 
-### `npm start`
+### `npm start` or `yarn start`
 
