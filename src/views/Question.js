@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import answerActions from '../redux/actions/answer-actions';
+import questionsActions from '../redux/actions/questions-actions';
 import decodeHTMLEntities from '../helpers/decodeHtml';
 
 const Container = styled.div`
@@ -60,13 +61,16 @@ const TRUE_VALUE = 'True';
 
 class Question extends Component {
   static propTypes = {
+    addAnswer: PropTypes.func.isRequired,
+    fetchQuestions: PropTypes.func.isRequired,
     history: PropTypes.shape().isRequired,
     match: PropTypes.shape().isRequired,
-    questionList: PropTypes.arrayOf(PropTypes.object).isRequired,
-    addAnswer: PropTypes.func.isRequired,
+    questionList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   };
 
   componentDidMount() {
+    const { fetchQuestions } = this.props;
+    fetchQuestions();
     document.addEventListener('keydown', this.handleKeyAnswer, false);
   }
 
@@ -102,7 +106,10 @@ class Question extends Component {
   };
 
   handleKeyAnswer = e => {
-    if (PASSED_KEYS.includes(e.code)) {
+    const {
+      questionList: { length },
+    } = this.props;
+    if (length && PASSED_KEYS.includes(e.code)) {
       const answerValue = e.code === 'KeyY' ? TRUE_VALUE : FALSE_VALUE;
       this.handleAnswer(answerValue);
     }
@@ -152,6 +159,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       addAnswer: answerActions.addAnswer,
+      fetchQuestions: questionsActions.fetchQuestionsRequest,
     },
     dispatch,
   );

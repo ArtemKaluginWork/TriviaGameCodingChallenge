@@ -1,12 +1,10 @@
 export default function decodeHTMLEntities(str) {
-  let newStr = str
   const element = document.createElement('div');
-  if (newStr && typeof newStr === 'string') {
-    newStr = newStr.replace(/<script[^>]*>([\S\s]*?)<\/script>/gim, '');
-    newStr = newStr.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
-    element.innerHTML = newStr;
-    newStr = element.textContent;
-    element.textContent = '';
+  if (str && typeof str === 'string') {
+    element.innerHTML = str
+      .replace(/<script[^>]*>([\S\s]*?)<\/script>/gim, '')
+      .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
+    return element.textContent;
   }
-  return newStr;
+  return str;
 }

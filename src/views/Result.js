@@ -6,20 +6,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import answerActions from '../redux/actions/answer-actions';
-import questionsActions from '../redux/actions/questions-actions';
 import decodeHTMLEntities from '../helpers/decodeHtml';
-
-const mapStateToProps = state => ({
-  answerList: state.answers.answerList,
-});
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      resetAnswer: answerActions.resetAnswer,
-      fetchQuestions: questionsActions.fetchQuestionsRequest,
-    },
-    dispatch,
-  );
 
 const Container = styled.div`
     box-shadow: 5px 5px 24px #D3D3D3;
@@ -68,15 +55,13 @@ const StyledLink = styled(Link)`
 
 class Result extends Component {
   static propTypes = {
-    resetAnswer: PropTypes.func.isRequired,
-    fetchQuestions: PropTypes.func.isRequired,
-    answerList: PropTypes.arrayOf(PropTypes.object).isRequired,
+    resetAnswers: PropTypes.func.isRequired,
+    answerList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   };
 
   componentWillUnmount() {
-    const { resetAnswer, fetchQuestions } = this.props;
-    resetAnswer();
-    fetchQuestions();
+    const { resetAnswers } = this.props;
+    resetAnswers();
   }
 
   renderAnswer = (answer, index) => {
@@ -108,6 +93,17 @@ class Result extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  answerList: state.answers.answerList,
+});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      resetAnswers: answerActions.resetAnswers,
+    },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,

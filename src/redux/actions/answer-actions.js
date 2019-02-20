@@ -1,16 +1,16 @@
 export const ADD_ANSWER = 'add-answer';
-export const RESET_ANSWER = 'reset-answer';
+export const RESET_ANSWERS = 'reset-answers';
 
 const ACTIONS = Object.freeze({
   ADD_ANSWER,
-  RESET_ANSWER,
+  RESET_ANSWERS,
 
   addAnswer: answer => ({
     type: ADD_ANSWER,
     payload: answer,
   }),
-  resetAnswer: () => ({
-    type: RESET_ANSWER,
+  resetAnswers: () => ({
+    type: RESET_ANSWERS,
   }),
 });
 
